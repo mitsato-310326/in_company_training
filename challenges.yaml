@@ -1,0 +1,57 @@
+chapters:
+  java00:
+    channel_name: java00
+    channel_id: 0
+    next_channel_name: java01
+    next_channel_id: 0
+    required_keys: [HelloWorld, PrintString, PrintInt]
+
+  java01:
+    channel_name: java01
+    channel_id: 0
+    next_channel_name: java02
+    next_channel_id: 0
+    required_keys: [SumOutput, SumReturn, DivideReturn]
+
+  java02:
+    channel_name: java02
+    channel_id: 0
+    next_channel_name: java03
+    next_channel_id: 0
+    required_keys: [EvenOdd, FizzBuzz, PrimeCheck, ReverseArray]
+    required_count: 3
+
+  java03:
+    channel_name: java03
+    channel_id: 0
+    next_channel_name: java04
+    next_channel_id: 0
+    required_keys: [EchoArg, PrintArgs, SumArgs]
+
+  java04:
+    channel_name: java04
+    channel_id: 0
+    next_channel_name: java05
+    next_channel_id: 0
+    required_keys: [UseProfile, Resume]
+
+  java05:
+    channel_name: java05
+    channel_id: 0
+    next_channel_name: java06
+    next_channel_id: 0
+    required_keys: [Goomba, KoopaTroopa, Enemy]
+
+  java06:
+    channel_name: java06
+    channel_id: 0
+    next_channel_name: java07
+    next_channel_id: 0
+    required_keys: [Animals, Band]
+
+  java07:
+    channel_name: java07
+    channel_id: 0
+    next_channel_name: null
+    next_channel_id: null
+    required_keys: [TryCatch, AgeValidator, ThrowingParser]
