@@ -5,7 +5,7 @@ public class Tester {
     static String cap(String[] args) {
         java.io.ByteArrayOutputStream b = new java.io.ByteArrayOutputStream();
         System.setOut(new java.io.PrintStream(b));
-        try { EchoArg.echoarg(args); } finally { System.setOut(OUT); }
+        try { EchoArg.main(args); } finally { System.setOut(OUT); }
         return b.toString().trim().replace("\r\n", "\n");
     }
 
@@ -15,9 +15,9 @@ public class Tester {
     }
 
     public static void main(String[] args) {
-        chk("echoarg([hello])",   "hello",   cap(new String[]{"hello"}));
-        chk("echoarg([Java])",    "Java",    cap(new String[]{"Java"}));
-        chk("echoarg([abc, xyz])", "abc",    cap(new String[]{"abc", "xyz"}));
+        chk("main([hello])",    "hello", cap(new String[]{"hello"}));
+        chk("main([Java])",     "Java",  cap(new String[]{"Java"}));
+        chk("main([abc, xyz])", "abc",   cap(new String[]{"abc", "xyz"}));
 
         OUT.println(p + "/" + t + " passed");
         System.exit(p == t ? 0 : 1);

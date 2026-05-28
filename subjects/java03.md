@@ -2,7 +2,7 @@
 
 ## 共通ルール
 
-- `main` メソッド・`Scanner` は **禁止** です
+- `Scanner` は **禁止** です
 - 提出ファイルは ZIP にまとめ、ファイル名を `Java03.zip` にしてください
 - ZIP 内のディレクトリ構造は各課題の「提出ディレクトリ」に従ってください
 - コンパイルエラーが出る提出は認められません
@@ -14,16 +14,16 @@
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java03/ex00/` |
+| 提出ディレクトリ | `ex00/` |
 | 提出ファイル | `EchoArg.java` |
 
-文字列配列 `args` の最初の要素を出力する静的メソッド `echoarg` を実装してください。
+`args[0]` を1行出力する `main` メソッドを実装してください。
 
 **プロトタイプ**
 
 ```java
 public class EchoArg {
-    public static void echoarg(String[] args) {
+    public static void main(String[] args) {
         // ここを実装する
     }
 }
@@ -32,8 +32,11 @@ public class EchoArg {
 **出力例**
 
 ```
-echoarg(["hello"])      → hello
-echoarg(["abc", "xyz"]) → abc
+$ java EchoArg hello
+hello
+
+$ java EchoArg abc xyz
+abc
 ```
 
 ---
@@ -42,16 +45,16 @@ echoarg(["abc", "xyz"]) → abc
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java03/ex01/` |
+| 提出ディレクトリ | `ex01/` |
 | 提出ファイル | `PrintArgs.java` |
 
-文字列配列 `args` の各要素を1行ずつ出力する静的メソッド `printargs` を実装してください。
+`args` の各要素を1行ずつ出力する `main` メソッドを実装してください。
 
 **プロトタイプ**
 
 ```java
 public class PrintArgs {
-    public static void printargs(String[] args) {
+    public static void main(String[] args) {
         // ここを実装する
     }
 }
@@ -60,7 +63,7 @@ public class PrintArgs {
 **出力例**
 
 ```
-printargs(["a", "b", "c"]) →
+$ java PrintArgs a b c
 a
 b
 c
@@ -68,21 +71,31 @@ c
 
 ---
 
-### Exercise 02 — 引数の合計を返す
+### Exercise 02 — 引数の合計を出力する
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java03/ex02/` |
+| 提出ディレクトリ | `ex02/` |
 | 提出ファイル | `SumArgs.java` |
 
-文字列配列 `args` の各要素を整数として解釈し、その合計を **返す** 静的メソッド `sumargs` を実装してください。
+`args` の各要素を整数として解釈し、その合計を出力する `main` メソッドを実装してください。
 
 **プロトタイプ**
 
 ```java
 public class SumArgs {
-    public static int sumargs(String[] args) {
+    public static void main(String[] args) {
         // ここを実装する
     }
 }
+```
+
+**出力例**
+
+```
+$ java SumArgs 3 5
+8
+
+$ java SumArgs 10 -3 2
+9
 ```

@@ -1,9 +1,9 @@
 public class SumArgs {
-    public static int sumargs(String[] args) {
+    public static void main(String[] args) {
         int sum = 0;
         for (String s : args) {
             sum += Integer.parseInt(s);
         }
-        return sum;
+        System.out.println(sum);
     }
 }

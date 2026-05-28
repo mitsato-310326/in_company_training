@@ -1,5 +1,5 @@
 public class PrintArgs {
-    public static void printargs(String[] args) {
+    public static void main(String[] args) {
         for (String s : args) {
             System.out.println(s);
         }

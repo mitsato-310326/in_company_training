@@ -2,7 +2,7 @@
 
 ## 共通ルール
 
-- `main` メソッド・`Scanner` は **禁止** です
+- `Scanner` は **禁止** です
 - 提出ファイルは ZIP にまとめ、ファイル名を `Java07.zip` にしてください
 - ZIP 内のディレクトリ構造は各課題の「提出ディレクトリ」に従ってください
 - コンパイルエラーが出る提出は認められません
@@ -14,7 +14,7 @@
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java07/ex00/` |
+| 提出ディレクトリ | `ex00/` |
 | 提出ファイル | `TryCatch.java` |
 
 文字列 `s` を整数に変換し、変換できれば整数を文字列で返し、
@@ -37,7 +37,7 @@ public class TryCatch {
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java07/ex01/` |
+| 提出ディレクトリ | `ex01/` |
 | 提出ファイル | `InvalidAgeException.java`、`AgeValidator.java` |
 
 **InvalidAgeException** — `Exception` を継承し、`String message` を受け取るコンストラクタを持つ独自例外クラスを実装してください。
@@ -64,7 +64,7 @@ public class AgeValidator {
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java07/ex02/` |
+| 提出ディレクトリ | `ex02/` |
 | 提出ファイル | `ThrowingParser.java` |
 
 文字列を整数に変換し、その値を返す静的メソッド `parse` を実装してください。

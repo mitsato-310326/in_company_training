@@ -2,7 +2,7 @@
 
 ## 共通ルール
 
-- `main` メソッド・`Scanner` は **禁止** です
+- `Scanner` は **禁止** です
 - 提出ファイルは ZIP にまとめ、ファイル名を `Java06.zip` にしてください
 - ZIP 内のディレクトリ構造は各課題の「提出ディレクトリ」に従ってください
 - コンパイルエラーが出る提出は認められません
@@ -14,7 +14,7 @@
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java06/ex00/` |
+| 提出ディレクトリ | `ex00/` |
 | 提出ファイル | `Walk.java`、`Donkey.java`、`Dog.java`、`Cat.java`、`Animals.java` |
 | テンプレート | `Walk.java`（配布済み） |
 
@@ -38,7 +38,7 @@ public class Animals {
 
 | | |
 |---|---|
-| 提出ディレクトリ | `Java06/ex01/` |
+| 提出ディレクトリ | `ex01/` |
 | 提出ファイル | `Bremen.java`、`Donkey.java`、`Dog.java`、`Cat.java`、`Chicken.java`、`Band.java` |
 | サーバー提供 | `Walk.java`（提出不要） |
 | テンプレート | `Bremen.java`（配布済み） |
