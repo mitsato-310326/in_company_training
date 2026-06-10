@@ -211,37 +211,57 @@ async def grademe(interaction: discord.Interaction, zip_file: discord.Attachment
                 return
             archive.extractall(extract_dir)
 
-        results = []
+        G = '\x1b[1;32m'  # bold green
+        R = '\x1b[31m'  # red
+        X = '\x1b[0m'   # reset
+
+        result_lines = []
+        footer_lines = []
         passed_keys = set()
+
         for key in required_keys:
             java_path = find_java_file(extract_dir, f'{key}.java')
             if java_path is None:
-                results.append(f'`{key}.java`: 提出物が不適切です（ファイルが見つかりません）')
+                result_lines.append(f'{R}{key}.java: ファイルが見つかりません{X}')
                 continue
             ok, detail = grade_file(java_path, '', '')
             if ok:
-                results.append(f'`{key}.java`: OK')
+                result_lines.append(f'{key}.java: {G}OK{X}')
                 passed_keys.add(key)
             elif detail.startswith('__COMPILE__\n'):
-                results.append(f'`{key}.java`: コンパイルできませんでした。')
+                result_lines.append(f'{key}.java: {R}コンパイルエラー{X}')
+            elif detail == '__DOCKER_DOWN__':
+                result_lines.append(f'{key}.java: {R}採点サーバー停止中{X}')
+            elif detail == 'Timeout':
+                result_lines.append(f'{key}.java: {R}タイムアウト{X}')
             else:
-                results.append(f'`{key}.java`: KO — {detail}')
+                indented = '\n'.join(f'  {l}' for l in detail.splitlines())
+                result_lines.append(f'{key}.java: {R}KO{X}\n{indented}')
 
         any_failed = len(passed_keys) < required_count
         if any_failed:
             wait = _record_failure(interaction.user.id, chapter_id)
-            results.append(f'（不合格のため {wait} 分間再提出できません）')
+            footer_lines.append(f'（不合格のため {wait} 分間再提出できません）')
 
-        chunks, buf, buf_len = [], [], 0
-        for line in results:
+        # ansi ブロックでチャンク分割（上限 1900 文字 + ブロック記法の余白）
+        LIMIT = 1900
+        chunks = []
+        buf, buf_len = [], 0
+        for line in result_lines:
             line_len = len(line) + 1
-            if buf_len + line_len > 2000:
-                chunks.append('\n'.join(buf))
+            if buf and buf_len + line_len > LIMIT:
+                chunks.append('```ansi\n' + '\n'.join(buf) + '\n```')
                 buf, buf_len = [], 0
             buf.append(line)
             buf_len += line_len
         if buf:
-            chunks.append('\n'.join(buf))
+            block = '```ansi\n' + '\n'.join(buf) + '\n```'
+            if footer_lines:
+                block += '\n' + '\n'.join(footer_lines)
+            chunks.append(block)
+        elif footer_lines:
+            chunks.append('\n'.join(footer_lines))
+
         for chunk in chunks:
             await interaction.followup.send(chunk)
 

@@ -1,10 +1,29 @@
 import subprocess
 import os
+import re
 import sys
 import shutil
 import tempfile
 
 TESTERS_DIR = os.path.join(os.path.dirname(__file__), 'testers')
+
+_KO_RE = re.compile(r'expected \[(.+?)\] got \[(.+?)\]')
+_VAL_LIMIT = 80   # Expected/Actual 各値の最大文字数
+_KO_MAX    = 3    # 表示する失敗ケースの上限数
+
+def _truncate(s):
+    return s if len(s) <= _VAL_LIMIT else s[:_VAL_LIMIT] + '…'
+
+def _format_ko(out):
+    """テスター出力から KO 行を抽出し Expected/Actual 形式に整形する。"""
+    results = []
+    for line in out.splitlines():
+        m = _KO_RE.search(line)
+        if m:
+            results.append(f'Expected: {_truncate(m.group(1))}\nActual:   {_truncate(m.group(2))}')
+            if len(results) >= _KO_MAX:
+                break
+    return '\n'.join(results) if results else 'KO'
 
 
 def run_python_file(path, input_data, timeout=5):
@@ -53,6 +72,9 @@ def run_tester_java(submission_dir):
     cmd = [runner, submission_dir]
     try:
         p = subprocess.run(cmd, text=True, capture_output=True, timeout=30)
+        combined = p.stdout + p.stderr
+        if 'Cannot connect to the Docker daemon' in combined or 'Is the docker daemon running' in combined:
+            return -1, '', '__DOCKER_DOWN__'
         return p.returncode, p.stdout, p.stderr
     except subprocess.TimeoutExpired:
         return -1, '', 'TIMEOUT'
@@ -110,11 +132,17 @@ def grade_java_with_tester(student_path):
 
         if code == 2:
             return False, '__COMPILE__\n' + (out + err).strip()
+        if code == -1 and err == '__DOCKER_DOWN__':
+            return False, '__DOCKER_DOWN__'
         if code == -1 and 'TIMEOUT' in err:
+            return False, 'Timeout'
+        if code == 124:  # timeout 5s java が kill したとき
             return False, 'Timeout'
         if code == 0:
             return True, out.strip() if out.strip() else 'OK'
-        detail = (out + err).strip()
+        if code == 1:
+            return False, _format_ko(out)
+        detail = out.strip()
         return False, detail if detail else 'KO'
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)

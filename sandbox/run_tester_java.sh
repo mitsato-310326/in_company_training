@@ -10,8 +10,7 @@ SUB_DIR=$(realpath "$1")
 IMAGE_NAME="submission-runner-java:latest"
 
 if ! docker image inspect "$IMAGE_NAME" > /dev/null 2>&1; then
-  echo "Building Java sandbox image ($IMAGE_NAME)..."
-  docker build -t "$IMAGE_NAME" docker/java
+  docker build -t "$IMAGE_NAME" docker/java > /dev/null 2>&1
 fi
 
 docker run --rm \
